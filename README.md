@@ -5,8 +5,8 @@ Follow the updates on our [telegram channel](http://github.com)!
 Also, if you have any problems working with the bot, you can contact our [support group](http://github.com) for help.
 
 ## How to use
-- Press */start* and send the bot an ID or a link to your channel or group
-- Just send to the bot link or file on webm video a bot convert it and send directly to your channel
+- Press ```/start``` and send the bot an ID or a link to your channel or group
+- Just send to the bot link or file on webm video a bot convert it and send directly to your channel!
 
 ## Setup Bot
 1. install [ffmpeg](https://www.ffmpeg.org/) on your PC
