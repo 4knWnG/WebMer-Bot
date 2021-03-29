@@ -9,7 +9,7 @@ Also, if you have any problems working with the bot, you can contact our [suppor
 - Just send to the bot link or file on webm video a bot convert it and send directly to your channel
 
 ## Setup Bot
-1. install ffmpeg on your PC
+1. install [ffmpeg](https://www.ffmpeg.org/) on your PC
 2. install dependencies from [requirements.txt](https://github.com/4knWnG/WEBMtoMP4-TG/blob/4f5519133b4960f9cb10b7004dd34b12b6a0c7b7/requirements.txt)
 3. Get bot token from [@BotFather](https://t.me/botfather)
 4. Replace the token in the [.env](https://github.com/4knWnG/WEBMtoMP4-TG/blob/4f5519133b4960f9cb10b7004dd34b12b6a0c7b7/.env) file.
