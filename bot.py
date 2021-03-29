@@ -26,11 +26,20 @@ class FFMConvertor:
 
 ffm = FFMConvertor()
 
+chatid = 0
+
 
 @dp.message_handler(commands=['help'])
 async def help_message(message: types.Message):
 
    await message.answer("Да просто добавь меня в чат и если ты или кто нибудь в чате напишут 300, то я отвечу отсоси у тракториста, и все в этом духе!")
+
+
+
+@dp.message_handler(commands=['setup'])
+async def setup_message(message: types.message):
+    
+    await bot.send_message(message.from_user.id, "Add me to your channel / group and make me an administrator, and then just send me any message from there!")
 
 
 
