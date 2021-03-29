@@ -1,4 +1,4 @@
-# Webmer Bot
+# WEBMer Bot
 **With bot you can convert webm to mp4 and immediately post them to your Telegram channel as a video message! [Try it!](https://t.me/WebmerBot)**
 
 Follow the updates on our [telegram channel](http://github.com)! 
