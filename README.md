@@ -3,3 +3,15 @@
 
 Follow the updates on our [telegram channel](http://github.com)! 
 Also, if you have any problems working with the bot, you can contact our [support group](http://github.com) for help.
+
+## Prerequisite
+    ffmpeg
+
+## install dependencies
+    pip3 install -r requirements.txt
+
+## Setup Bot
+    - Get bot token 
+    - Change your bot token in .env
+    - install dependencies
+
