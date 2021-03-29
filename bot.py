@@ -38,23 +38,7 @@ async def help_message(message: types.Message):
 async def convert_webm(message: types.file):
     global ffm
 
-    if re.search(r'webm$', message.text.lower()):
-        webmid = 'dsfghsdgdfsg'
-        await bot.send_message(message.from_user.id, "Конвертирую в mp4...")
-        request = requests.get(message.text)
-        input_file_name = str(webmid + 'input.webm')
-        output_file_name = str(webmid + 'output.mp4')
-        with open(input_file_name, 'wb') as file:
-            file.write(request.content)
-        ffm.convert_webm_mp4(input_file_name, output_file_name)
-        file = types.InputFile(output_file_name)
-        await bot.send_video(int(-1001363550636), file, supports_streaming=True)
-        
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
-        os.remove(path)
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
-        os.remove(path)
-    elif message.document.mime_subtype == 'webm':
+    if message.document.mime_subtype == 'webm':
         try:
             webmid = message.document.file_id
             await bot.send_message(message.from_user.id, "Конвертирую в mp4...")
@@ -69,7 +53,7 @@ async def convert_webm(message: types.file):
                 f.write(b.getvalue())
             ffm.convert_webm_mp4(input_file_name, output_file_name)
             file = types.InputFile(output_file_name)
-            await bot.send_document(int(-1001363550636), file)
+            await bot.send_document(int(-1001380241545), file)
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
             os.remove(path)
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
@@ -78,6 +62,24 @@ async def convert_webm(message: types.file):
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
             os.remove(path)
             await bot.send_message(message.from_user.id, "Ошибка конвертации")
+    
+    elif re.search(r'webm$', message.text.lower()):
+        webmid = 'dsfghsdgdfsg'
+        await bot.send_message(message.from_user.id, "Конвертирую в mp4...")
+        request = requests.get(message.text)
+        input_file_name = str(webmid + 'input.webm')
+        output_file_name = str(webmid + 'output.mp4')
+        with open(input_file_name, 'wb') as file:
+            file.write(request.content)
+        ffm.convert_webm_mp4(input_file_name, output_file_name)
+        file = types.InputFile(output_file_name)
+        await bot.send_video(int(-1001380241545), file, supports_streaming=True)
+        
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
+        os.remove(path)
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
+        os.remove(path)
+    
     else:
         await bot.send_message(message.from_user.id, "Требуется .webm файл или ссылка на него")
    
