@@ -18,5 +18,5 @@ Also, if you have any problems working with the bot, you can contact our [suppor
 ## Prerequisite
     ffmpeg
 
-## install dependencies
+## Install dependencies
     pip3 install -r requirements.txt
