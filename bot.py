@@ -26,13 +26,16 @@ class FFMConvertor:
 
 ffm = FFMConvertor()
 
-chatid = 0
+channelid = 0
+print(channelid)
 
 
 @dp.message_handler(commands=['help'])
 async def help_message(message: types.Message):
 
-   await message.answer("Да просто добавь меня в чат и если ты или кто нибудь в чате напишут 300, то я отвечу отсоси у тракториста, и все в этом духе!")
+   await message.answer("Hi i am WEBMer - i can halp you to post webm videos to  your channels/chats!"
+   "\n- To start you need to connect me to your channel! Type /setup"
+   "\n- After that you can send me webm files and I will convert them to mp4 and immediately send them to your channel as a video message!")
 
 
 
@@ -40,6 +43,19 @@ async def help_message(message: types.Message):
 async def setup_message(message: types.message):
     
     await bot.send_message(message.from_user.id, "Add me to your channel / group and make me an administrator, and then just send me any message from there!")
+
+
+
+@dp.message_handler(content_types=["text"])
+async def setup2_message(message: types.message):
+
+    global channelid 
+
+    if not message.forward_from_chat.id:
+        await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
+    else:
+        channelid = message.forward_from_chat.id
+        print(channelid)
 
 
 
@@ -62,7 +78,7 @@ async def convert_webm(message: types.file):
                 f.write(b.getvalue())
             ffm.convert_webm_mp4(input_file_name, output_file_name)
             file = types.InputFile(output_file_name)
-            await bot.send_document(int(-1001380241545), file)
+            await bot.send_document(int(channelid), file)
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
             os.remove(path)
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
@@ -82,7 +98,7 @@ async def convert_webm(message: types.file):
             file.write(request.content)
         ffm.convert_webm_mp4(input_file_name, output_file_name)
         file = types.InputFile(output_file_name)
-        await bot.send_video(int(-1001380241545), file, supports_streaming=True)
+        await bot.send_video(int(channelid), file, supports_streaming=True)
         
         path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
         os.remove(path)
