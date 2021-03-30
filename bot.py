@@ -27,8 +27,6 @@ class FFMConvertor:
 ffm = FFMConvertor()
 
 channelid = 0
-print(channelid)
-channelname = 0
 channelname = []
 
 @dp.message_handler(commands=['help'])
