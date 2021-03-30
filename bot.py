@@ -29,6 +29,7 @@ ffm = FFMConvertor()
 channelid = 0
 print(channelid)
 channelname = 0
+channelname = []
 
 @dp.message_handler(commands=['help'])
 async def help_message(message: types.Message):
@@ -50,10 +51,11 @@ async def setup_message(message: types.message):
 async def current_message(message: types.message):
 
     global channelid
+    global channelname
 
     if channelid != 0:
 
-        await bot.send_message(message.from_user.id, channelid)
+        await bot.send_message(message.from_user.id, "@" + channelname)
     else:
         await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
 
@@ -64,12 +66,15 @@ async def setup2_message(message: types.message):
 
     
     global channelid
+    global channelname
 
     if not message.forward_from_chat.id:
         await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
     else:
         channelid = message.forward_from_chat.id
         print(channelid)
+        channelname = message.forward_from_chat.username
+        print(channelname)
 
 
 
