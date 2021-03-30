@@ -7,6 +7,7 @@ import re
 import random
 from dotenv import load_dotenv
 import requests
+import json
 
 load_dotenv()
 bot = Bot(token=os.getenv('TOKEN'))
@@ -26,13 +27,35 @@ class FFMConvertor:
 
 ffm = FFMConvertor()
 
-channelid = 0
+channelid = []
 channelname = []
+
+@dp.message_handler(commands=['start'])
+async def start_message(message: types.Message):
+
+    with open('channels.json') as f:
+        channel = json.load(f)
+        for i in channel['user']:
+
+            if message.from_user.id == i['id']:
+
+                global channelid
+                global channelname
+
+                channelid = i['channelid']
+                channelname = i['channelname']
+
+                await bot.send_message(message.from_user.id, 'Welcome back! \nThe last time you posted on this channel ' + f'@{channelname}' + ' \nDo not forget that I have to be an admin in the channels which you want to send WebM!')
+
+            else:
+                await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
+                "\nTo start send me any message from channel you want to post webm!")
+
 
 @dp.message_handler(commands=['help'])
 async def help_message(message: types.Message):
 
-   await message.answer("Hi i am WEBMer - i can halp you to post webm videos to  your channels/chats!"
+   await bot.send_message(message.from_user.id, "Hi i am WEBMer - i can halp you to post webm videos to  your channels/chats!"
    "\n- To start you need to connect me to your channel! Type /setup"
    "\n- After that you can send me webm files and I will convert them to mp4 and immediately send them to your channel as a video message!")
 
@@ -62,17 +85,32 @@ async def current_message(message: types.message):
 @dp.message_handler(content_types=["text"])
 async def setup2_message(message: types.message):
 
-    
-    global channelid
-    global channelname
-
     if not message.forward_from_chat.id:
         await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
     else:
-        channelid = message.forward_from_chat.id
-        print(channelid)
-        channelname = message.forward_from_chat.username
-        print(channelname)
+
+        global channelid
+        global channelname
+
+        channel = {}
+        channel['user'] = []
+        channel['user'].append({
+            'id': message.from_user.id,
+            'channelid': message.forward_from_chat.id,
+            'channelname': message.forward_from_chat.username
+        })
+
+        with open('channels.json', 'w') as f:
+            json.dump(channel, f)
+
+        with open('channels.json') as f:
+            channel = json.load(f)
+            for i in channel['user']:
+
+                if message.from_user.id == i['id']:
+
+                    channelid = i['channelid']
+                    channelname = i['channelname']
 
 
 
