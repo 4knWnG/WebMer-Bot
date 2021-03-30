@@ -46,6 +46,18 @@ async def setup_message(message: types.message):
 
 
 
+@dp.message_handler(commands=['current'])
+async def current_message(message: types.message):
+
+    global channelid
+
+    if channelid != 0:
+        await bot.send_message(message.from_user.id, channelid)
+    else:
+        await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
+
+
+
 @dp.message_handler(content_types=["text"])
 async def setup2_message(message: types.message):
 
