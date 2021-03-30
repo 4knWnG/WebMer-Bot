@@ -55,7 +55,7 @@ async def current_message(message: types.message):
 
     if channelid != 0:
 
-        await bot.send_message(message.from_user.id, "@" + channelname)
+        await bot.send_message(message.from_user.id, f'@{channelname}')
     else:
         await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
 
