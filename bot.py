@@ -79,11 +79,16 @@ async def setup2_message(message: types.message):
 @dp.message_handler(content_types=['document','text'])
 async def convert_webm(message: types.file):
     global ffm
+    global channelid
 
-    if message.document.mime_subtype == 'webm':
+    if channelid == 0:
+
+        await bot.send_message(message.from_user.id, "First you need to setup your server!")
+
+    elif message.document.mime_subtype == 'webm':
         try:
             webmid = message.document.file_id
-            await bot.send_message(message.from_user.id, "Конвертирую в mp4...")
+            await bot.send_message(message.from_user.id, "Converting to mp4 ...")
             webmvid = await bot.download_file_by_id(webmid)
 
             input_file_name = str(webmid + 'input.webm')
@@ -103,11 +108,11 @@ async def convert_webm(message: types.file):
         except:
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
             os.remove(path)
-            await bot.send_message(message.from_user.id, "Ошибка конвертации")
+            await bot.send_message(message.from_user.id, "Conversion error!")
     
     elif re.search(r'webm$', message.text.lower()):
         webmid = 'dsfghsdgdfsg'
-        await bot.send_message(message.from_user.id, "Конвертирую в mp4...")
+        await bot.send_message(message.from_user.id, "Converting to mp4 ...")
         request = requests.get(message.text)
         input_file_name = str(webmid + 'input.webm')
         output_file_name = str(webmid + 'output.mp4')
@@ -123,7 +128,7 @@ async def convert_webm(message: types.file):
         os.remove(path)
     
     else:
-        await bot.send_message(message.from_user.id, "Требуется .webm файл или ссылка на него")
+        await bot.send_message(message.from_user.id, "WebM file or a link to it is required!")
    
 
 
