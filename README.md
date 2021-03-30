@@ -7,7 +7,7 @@ Follow the updates on our [telegram channel](http://github.com)!
 Also, if you have any problems working with the bot, you can contact our [support group](http://github.com) for help.
 
 ## How to use
-- Press ```/start``` and send the bot an ID or a link to your channel or group
+- Press ```/setup``` or just forward to the bot any message from your channel/group!
 - Just send to the bot link or file on webm video a bot convert it and send directly to your channel!
 
 ## Setup Bot
