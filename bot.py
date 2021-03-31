@@ -19,9 +19,12 @@ class FFMConvertor:
 
    def convert_webm_mp4(self, input_file, output_file):
       try:
+
          command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
          subprocess.run(command)
+         
       except:
+
          print('Some Exeption')
 
 
@@ -48,6 +51,7 @@ async def start_message(message: types.Message):
                 await bot.send_message(message.from_user.id, 'Welcome back! \nThe last time you posted on this channel ' + f'@{channelname}' + ' \nDo not forget that I have to be an admin in the channels which you want to send WebM!')
 
             else:
+
                 await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
                 "\nTo start send me any message from channel you want to post webm!")
 
@@ -77,7 +81,9 @@ async def current_message(message: types.message):
     if channelid != []:
 
         await bot.send_message(message.from_user.id, 'Currently connected server: ' + f'@{channelname}')
+
     else:
+
         await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
 
 
@@ -86,7 +92,9 @@ async def current_message(message: types.message):
 async def setup2_message(message: types.message):
 
     if not message.forward_from_chat.id:
+
         await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
+
     else:
 
         global channelid
@@ -113,6 +121,7 @@ async def setup2_message(message: types.message):
                     channelname = i['channelname']
                 
                 else:
+
                     channel['user'].append({
                         'id': message.from_user.id,
                         'channelid': message.forward_from_chat.id,
@@ -134,7 +143,9 @@ async def convert_webm(message: types.file):
         await bot.send_message(message.from_user.id, "First you need to setup your server!")
 
     elif message.document.mime_subtype == 'webm':
+
         try:
+
             webmid = message.document.file_id
             await bot.send_message(message.from_user.id, "Converting to mp4 ...")
             webmvid = await bot.download_file_by_id(webmid)
@@ -153,7 +164,9 @@ async def convert_webm(message: types.file):
             os.remove(path)
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
             os.remove(path)
+
         except:
+
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
             os.remove(path)
             await bot.send_message(message.from_user.id, "Conversion error!")
@@ -176,6 +189,7 @@ async def convert_webm(message: types.file):
         os.remove(path)
     
     else:
+
         await bot.send_message(message.from_user.id, "WebM file or a link to it is required!")
    
 
