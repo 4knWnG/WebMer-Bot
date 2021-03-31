@@ -30,8 +30,8 @@ class FFMConvertor:
 
 ffm = FFMConvertor()
 
-channelid = []
-channelname = []
+channelid = 0
+channelname = "none"
 
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
@@ -40,8 +40,8 @@ async def start_message(message: types.Message):
     global channelname
 
     with open('channels.json') as f:
-        channel = json.load(f)
-        for u in channel['user']:
+        data = json.load(f)
+        for u in data['users']:
 
             if message.from_user.id != u['id']:
 
@@ -79,7 +79,7 @@ async def current_message(message: types.message):
     global channelid
     global channelname
 
-    if channelid != []:
+    if channelid != 0:
 
         await bot.send_message(message.from_user.id, 'Currently connected server: ' + f'@{channelname}')
 
@@ -102,8 +102,8 @@ async def setup2_message(message: types.message):
     else:
 
         with open('channels.json') as f:
-            channel = json.load(f)
-            for u in channel['user']:
+            data = json.load(f)
+            for u in data['users']:
 
                 if message.from_user.id == u['id']:
 
@@ -113,10 +113,10 @@ async def setup2_message(message: types.message):
                 elif message.from_user.id != u['id'] & message.from_user.id != 0:
 
                     newuser = ({"id": message.from_user.id, "channelid": message.forward_from_chat.id, "channelname": message.forward_from_chat.username}, )
-                    channel['user'] += (newuser)
+                    data['users'] += (newuser)
                     
                 with open('channels.json', 'w') as f:
-                    json.dump(channel, f)
+                    json.dump(data, f)
 
         channelid = message.forward_from_chat.id
         channelname = message.forward_from_chat.username
