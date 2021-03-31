@@ -74,9 +74,9 @@ async def current_message(message: types.message):
     global channelid
     global channelname
 
-    if channelid != 0:
+    if channelid != []:
 
-        await bot.send_message(message.from_user.id, f'@{channelname}')
+        await bot.send_message(message.from_user.id, 'Currently connected server: ' + f'@{channelname}')
     else:
         await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
 
@@ -111,6 +111,16 @@ async def setup2_message(message: types.message):
 
                     channelid = i['channelid']
                     channelname = i['channelname']
+                
+                else:
+                    channel['user'].append({
+                        'id': message.from_user.id,
+                        'channelid': message.forward_from_chat.id,
+                        'channelname': message.forward_from_chat.username
+                    })
+                    
+                    with open('channels.json', 'w') as f:
+                        json.dump(channel, f)
 
 
 
@@ -119,7 +129,7 @@ async def convert_webm(message: types.file):
     global ffm
     global channelid
 
-    if channelid == 0:
+    if channelid == []:
 
         await bot.send_message(message.from_user.id, "First you need to setup your server!")
 
