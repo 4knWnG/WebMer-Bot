@@ -8,7 +8,8 @@ Also, if you have any problems working with the bot, you can contact our [suppor
 
 ## How to use
 - Press ```/setup``` or just forward to the bot any message from your channel/group!
-- Just send to the bot link or file on webm video a bot convert it and send directly to your channel!
+- Just send to the bot link or file on webm video and bot convert it and send directly to your channel!
+- Command ```/current``` will show your current active posting channel!
 
 ## Setup Bot
 1. install [ffmpeg](https://www.ffmpeg.org/) on your PC
