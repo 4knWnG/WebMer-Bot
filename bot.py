@@ -36,24 +36,25 @@ channelname = []
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
 
+    global channelid
+    global channelname
+
     with open('channels.json') as f:
         channel = json.load(f)
-        for i in channel['user']:
+        for u in channel['user']:
 
-            if message.from_user.id == i['id']:
+            if message.from_user.id != u['id']:
 
-                global channelid
-                global channelname
-
-                channelid = i['channelid']
-                channelname = i['channelname']
-
-                await bot.send_message(message.from_user.id, 'Welcome back! \nThe last time you posted on this channel ' + f'@{channelname}' + ' \nDo not forget that I have to be an admin in the channels which you want to send WebM!')
+                await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
+                "\nTo start send me any message from channel you want to post webm and make me an admin of this channel!")
 
             else:
 
-                await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
-                "\nTo start send me any message from channel you want to post webm!")
+                channelid = u['channelid']
+                channelname = u['channelname']
+
+                await bot.send_message(message.from_user.id, 'The last time you posted on this channel ' + f'@{channelname}')
+
 
 
 @dp.message_handler(commands=['help'])
@@ -91,46 +92,34 @@ async def current_message(message: types.message):
 @dp.message_handler(content_types=["text"])
 async def setup2_message(message: types.message):
 
+    global channelid
+    global channelname
+
     if not message.forward_from_chat.id:
 
         await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
 
     else:
 
-        global channelid
-        global channelname
-
-        channel = {}
-        channel['user'] = []
-        channel['user'].append({
-            'id': message.from_user.id,
-            'channelid': message.forward_from_chat.id,
-            'channelname': message.forward_from_chat.username
-        })
-
-        with open('channels.json', 'w') as f:
-            json.dump(channel, f)
-
         with open('channels.json') as f:
             channel = json.load(f)
-            for i in channel['user']:
+            for u in channel['user']:
 
-                if message.from_user.id == i['id']:
+                if message.from_user.id == u['id']:
 
-                    channelid = i['channelid']
-                    channelname = i['channelname']
+                    u['channelid'] = message.forward_from_chat.id
+                    u['channelname'] = message.forward_from_chat.username
                 
-                else:
+                elif message.from_user.id != u['id'] & message.from_user.id != 0:
 
-                    channel['user'].append({
-                        'id': message.from_user.id,
-                        'channelid': message.forward_from_chat.id,
-                        'channelname': message.forward_from_chat.username
-                    })
+                    newuser = ({"id": message.from_user.id, "channelid": message.forward_from_chat.id, "channelname": message.forward_from_chat.username}, )
+                    channel['user'] += (newuser)
                     
-                    with open('channels.json', 'w') as f:
-                        json.dump(channel, f)
+                with open('channels.json', 'w') as f:
+                    json.dump(channel, f)
 
+        channelid = message.forward_from_chat.id
+        channelname = message.forward_from_chat.username
 
 
 @dp.message_handler(content_types=['document','text'])
