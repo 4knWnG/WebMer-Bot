@@ -7,6 +7,7 @@ Follow the updates on our [telegram channel](http://github.com)!
 Also, if you have any problems working with the bot, you can contact our [support group](http://github.com) for help.
 
 ## How to use
+- Click on ```/start``` to start working with the bot. If this is not the first time you use WebMer, then it will apply your last settup.
 - Press ```/setup``` or just forward to the bot any message from your channel/group!
 - Just send to the bot link or file on webm video and bot convert it and send directly to your channel!
 - Command ```/current``` will show your current active posting channel!
