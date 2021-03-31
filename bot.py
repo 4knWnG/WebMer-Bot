@@ -31,7 +31,7 @@ class FFMConvertor:
 ffm = FFMConvertor()
 
 channelid = 0
-channelname = "WebMerBotOfficial"
+channelname = []
 
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
@@ -43,7 +43,7 @@ async def start_message(message: types.Message):
         data = json.load(f)
         for u in data['users']:
 
-            if message.from_user.id != u['id']:
+            if message.from_user.id != u['id'] | channelid == 0:
 
                 await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
                 "\nTo start send me any message from channel you want to post webm and make me an admin of this channel!")
@@ -53,7 +53,7 @@ async def start_message(message: types.Message):
                 channelid = u['channelid']
                 channelname = u['channelname']
 
-                await bot.send_message(message.from_user.id, 'The last time you posted on this channel ' + f'@{channelname}')
+                await bot.send_message(message.from_user.id, 'Welcome back! The last time you posted on this channel ' + f'@{channelname}')
 
 
 
@@ -110,7 +110,7 @@ async def setup2_message(message: types.message):
                     u['channelid'] = message.forward_from_chat.id
                     u['channelname'] = message.forward_from_chat.username
                 
-                elif message.from_user.id != u['id'] & message.from_user.id != 0:
+                elif message.from_user.id != u['id']:
 
                     newuser = ({"id": message.from_user.id, "channelid": message.forward_from_chat.id, "channelname": message.forward_from_chat.username}, )
                     data['users'] += (newuser)
