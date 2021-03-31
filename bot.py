@@ -31,7 +31,7 @@ class FFMConvertor:
 ffm = FFMConvertor()
 
 channelid = 0
-channelname = "none"
+channelname = "WebMerBotOfficial"
 
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
