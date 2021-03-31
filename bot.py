@@ -94,29 +94,28 @@ async def setup2_message(message: types.message):
 
     global channelid
     global channelname
+    y=5
+    if message.forward_from_chat:
+        if not message.forward_from_chat.id:
 
-    if not message.forward_from_chat.id:
+            await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
 
-        await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
+        else:
 
-    else:
+            with open('channels.json') as f:
+                data = json.load(f)
+                for u in data['users']:
+                    isnew = True
+                    if message.from_user.id == u['id']:
+                        u['channelid'] = message.forward_from_chat.id
+                        u['channelname'] = message.forward_from_chat.username
+                        isnew = False
 
-        with open('channels.json') as f:
-            data = json.load(f)
-            for u in data['users']:
-
-                if message.from_user.id == u['id']:
-
-                    u['channelid'] = message.forward_from_chat.id
-                    u['channelname'] = message.forward_from_chat.username
-                
-                elif message.from_user.id != u['id'] & message.from_user.id != 0:
-
-                    newuser = ({"id": message.from_user.id, "channelid": message.forward_from_chat.id, "channelname": message.forward_from_chat.username}, )
-                    data['users'] += (newuser)
-                    
-                with open('channels.json', 'w') as f:
-                    json.dump(data, f)
+            with open('channels.json', 'w') as f:
+                if isnew:
+                    newuser = ({'id': message.from_user.id,'channelid': message.forward_from_chat.id, 'channelname': message.forward_from_chat.username})
+                    data['users'].append(newuser)
+                json.dump(data, f)
 
         channelid = message.forward_from_chat.id
         channelname = message.forward_from_chat.username
