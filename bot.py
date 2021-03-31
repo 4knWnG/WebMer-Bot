@@ -94,7 +94,7 @@ async def setup2_message(message: types.message):
 
     global channelid
     global channelname
-    y=5
+
     if message.forward_from_chat:
         if not message.forward_from_chat.id:
 
