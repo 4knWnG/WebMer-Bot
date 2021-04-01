@@ -51,7 +51,7 @@ async def start_message(message: types.Message):
                 channelid = u['channelid']
                 channelname = u['channelname']
 
-                await bot.send_message(message.from_user.id, 'The last time you posted on this channel ' + f'@{channelname}')
+                await bot.send_message(message.from_user.id, 'The last time you posted on this channel: ' + f'@{channelname}')
 
 
 
