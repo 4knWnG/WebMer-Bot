@@ -21,11 +21,7 @@ class FFMConvertor:
         command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
         subprocess.run(command)
 
-
 ffm = FFMConvertor()
-
-channelid = 0
-channelname = "WebMerBotOfficial"
 
 
 @dp.message_handler(commands=['start'])
@@ -33,20 +29,18 @@ async def start_message(message: types.Message):
     await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
                                                  "\nTo start send me any message from channel you want to post webm "
                                                  "and make me an admin of this channel!")
-    set_channelid(message)
+    channelname = get_channelid(message)['channelname']
     await bot.send_message(message.from_user.id, f'The last time you posted on this channel: @{channelname}')
 
 
-def set_channelid(message):
-    global channelid
-    global channelname
+def get_channelid(message):
     with open('channels.json') as f:
         data = json.load(f)
         for u in data['users']:
             if message.from_user.id == u['id']:
                 channelid = u['channelid']
                 channelname = u['channelname']
-
+    return {'channelid': channelid, 'channelname': channelname}
 
 
 @dp.message_handler(commands=['help'])
@@ -65,9 +59,8 @@ async def setup_message(message: types.message):
 
 @dp.message_handler(commands=['current'])
 async def current_message(message: types.message):
-    global channelid
-    global channelname
 
+    channelid = get_channelid(message)['channelid']
     if channelid != 0:
 
         await bot.send_message(message.from_user.id, 'Currently connected server: ' + f'@{channelname}')
@@ -80,9 +73,10 @@ async def current_message(message: types.message):
 @dp.message_handler(content_types=['document', 'text'])
 async def convert_webm(message: types.file):
     global ffm
-    global channelid
-    global channelname
-    set_channelid(message)
+
+    channel_params = get_channelid(message)
+    channelid = channel_params['channelid']
+    channelname = channel_params['channelname']
 
     if message.forward_from_chat:
         if not message.forward_from_chat.id:
@@ -131,6 +125,8 @@ async def convert_webm(message: types.file):
                 os.remove(path)
                 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
                 os.remove(path)
+                await bot.send_message(message.from_user.id,
+                                       f"Converting finished, video sent to channel @{channelname}")
             except:
                 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
                 os.remove(path)
