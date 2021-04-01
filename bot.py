@@ -119,6 +119,8 @@ async def setup2_message(message: types.message):
         channelid = message.forward_from_chat.id
         channelname = message.forward_from_chat.username
 
+        await bot.send_message(message.from_user.id, "Ready to post to channel: " + f'@{channelname}' + " Don't forget that i must be the admin of this channel!")
+
 
 @dp.message_handler(content_types=['document','text'])
 async def convert_webm(message: types.file):
