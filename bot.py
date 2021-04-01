@@ -162,7 +162,7 @@ async def convert_webm(message: types.file):
         with open(file_name, 'wb') as file:
             file.write(request.content)
             file.close()
-        await bot.send_message(message.from_user.id, "Sending mp4")
+        await bot.send_message(message.from_user.id, f"Sending mp4 to channel @{channelname}")
         file = types.InputFile(file_name)
         await bot.send_video(int(channelid), file)
 
