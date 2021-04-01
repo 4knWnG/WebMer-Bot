@@ -62,7 +62,9 @@ async def setup_message(message: types.message):
 @dp.message_handler(commands=['current'])
 async def current_message(message: types.message):
 
-    channelid = get_channel_params(message)['channelid']
+    channel_params = get_channel_params(message)
+    channelid = channel_params['channelid']
+    channelname = channel_params['channelname']
     if channelid != 0:
 
         await bot.send_message(message.from_user.id, 'Currently connected server: ' + f'@{channelname}')
