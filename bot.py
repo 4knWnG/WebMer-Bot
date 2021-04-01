@@ -1,11 +1,11 @@
 from aiogram import Bot, Dispatcher, executor, types
 from asyncio import sleep
+from dotenv import load_dotenv
 from io import BytesIO
+
 import subprocess
 import os
 import re
-import random
-from dotenv import load_dotenv
 import requests
 import json
 

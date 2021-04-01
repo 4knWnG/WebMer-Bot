@@ -3,4 +3,4 @@ asyncio==3.4.3
 ffmpeg
 pip==21.0.1
 python-dotenv==0.15.0
-requests
+requests==2.25.1
