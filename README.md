@@ -2,7 +2,11 @@
 
 # WEBMer Bot
 
-![Python](https://img.shields.io/static/v1?label=python&message=3.9.2&style=flat-square&color=blue) ![pip](https://img.shields.io/static/v1?label=pip&message=21.0.1&style=flat-square&color=blue) ![aiogram](https://img.shields.io/static/v1?label=aiogram&message=2.12.1&style=flat-square&color=orange) ![asyncio](https://img.shields.io/static/v1?label=asyncio&message=3.4.3&style=flat-square&color=red) ![requests](https://img.shields.io/static/v1?label=requests&message=2.25.1&style=flat-square&color=green)
+<a href="https://www.python.org/downloads/"><img src="https://img.shields.io/static/v1?label=python&message=3.9.2&style=flat-square&color=blue"></a>
+<a href="https://pypi.org/project/pip/"><img src="https://img.shields.io/static/v1?label=pip&message=21.0.1&style=flat-square&color=blue"></a>
+<a href="https://pypi.org/project/aiogram/"><img src="https://img.shields.io/static/v1?label=aiogram&message=2.12.1&style=flat-square&color=orange"></a>
+<a href="https://pypi.org/project/asyncio/"><img src="https://img.shields.io/static/v1?label=asyncio&message=3.4.3&style=flat-square&color=red"></a>
+<a href="https://pypi.org/project/requests/"><img src="https://img.shields.io/static/v1?label=requests&message=2.25.1&style=flat-square&color=green"></a>
 
 **With bot you can convert webm to mp4 and immediately post them to your Telegram channel as a video message! [Try it!](https://t.me/WebmerBot)**
 
@@ -30,4 +34,5 @@ Also, if you have any problems working with the bot, you can contact our [suppor
 
 ## Social
 
-![GitHub](https://img.shields.io/static/v1?label=GitHub&message=@4knWnG&style=flat-square&color=black&logo=github) ![Telegram](https://img.shields.io/static/v1?label=Telegram&message=@WebMerBotOfficial&style=flat-square&color=37afe2&logo=telegram&link=http://left&link=http://righthttps://t.me/WebMerBotOfficial)
+<a href="https://t.me/linux_repo"><img src="https://img.shields.io/static/v1?label=GitHub&message=@4knWnG&style=flat-square&color=black&logo=github"></a>
+<a href="https://t.me/linux_repo"><img src="https://img.shields.io/static/v1?label=Telegram&message=@WebMerBotOfficial&style=flat-square&color=37afe2&logo=telegram"></a>
