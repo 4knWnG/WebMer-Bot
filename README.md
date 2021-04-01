@@ -30,4 +30,4 @@ Also, if you have any problems working with the bot, you can contact our [suppor
 
 ## Social
 
-![GitHub](https://img.shields.io/static/v1?label=GitHub&message=@4knWnG&style=flat-square&color=black&logo=github) ![Telegram](https://img.shields.io/static/v1?label=Telegram&message=@WebMerBotOfficial&style=flat-square&color=37afe2&logo=telegram&link=https://t.me/WebMerBotOfficial)
+![GitHub](https://img.shields.io/static/v1?label=GitHub&message=@4knWnG&style=flat-square&color=black&logo=github) ![Telegram](https://img.shields.io/static/v1?label=Telegram&message=@WebMerBotOfficial&style=flat-square&color=37afe2&logo=telegram&link=http://left&link=http://righthttps://t.me/WebMerBotOfficial)
