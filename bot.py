@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from dotenv import load_dotenv
 from io import BytesIO
 
+import ffmpeg
 import subprocess
 import os
 import re
@@ -17,12 +18,10 @@ dp = Dispatcher(bot)
 class FFMConvertor:
 
     def convert_webm_mp4(self, input_file, output_file):
-        try:
+        
             command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
             subprocess.run(command)
-        except:
-            print('Some Exeption')
-
+        
 
 ffm = FFMConvertor()
 
