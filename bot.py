@@ -18,10 +18,9 @@ dp = Dispatcher(bot)
 class FFMConvertor:
 
     def convert_webm_mp4(self, input_file, output_file):
-        
-            command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
-            subprocess.run(command)
-        
+        command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
+        subprocess.run(command)
+
 
 ffm = FFMConvertor()
 
@@ -31,22 +30,23 @@ channelname = "WebMerBotOfficial"
 
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
+    await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
+                                                 "\nTo start send me any message from channel you want to post webm "
+                                                 "and make me an admin of this channel!")
+    set_channelid(message)
+    await bot.send_message(message.from_user.id, f'The last time you posted on this channel: @{channelname}')
+
+
+def set_channelid(message):
     global channelid
     global channelname
-
-    await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
-                                                 "\nTo start send me any message from channel you want to post webm and make me an admin of this channel!")
-
     with open('channels.json') as f:
         data = json.load(f)
         for u in data['users']:
-
             if message.from_user.id == u['id']:
                 channelid = u['channelid']
                 channelname = u['channelname']
 
-                await bot.send_message(message.from_user.id,
-                                       'The last time you posted on this channel: ' + f'@{channelname}')
 
 
 @dp.message_handler(commands=['help'])
@@ -77,41 +77,12 @@ async def current_message(message: types.message):
         await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
 
 
-# @dp.message_handler(content_types=["text"])
-# async def setup2_message(message: types.message):
-#     global channelid
-#     global channelname
-#
-#     if message.forward_from_chat:
-#         if not message.forward_from_chat.id:
-#             await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
-#         else:
-#             with open('channels.json') as f:
-#                 data = json.load(f)
-#                 isnew = True
-#                 for u in data['users']:
-#                     if message.from_user.id == u['id']:
-#                         u['channelid'] = message.forward_from_chat.id
-#                         u['channelname'] = message.forward_from_chat.username
-#                         isnew = False
-#             with open('channels.json', 'w') as f:
-#                 if isnew:
-#                     newuser = ({'id': message.from_user.id, 'channelid': message.forward_from_chat.id,
-#                                 'channelname': message.forward_from_chat.username})
-#                     data['users'].append(newuser)
-#                 json.dump(data, f)
-#                 f.close()
-#         channelid = message.forward_from_chat.id
-#         channelname = message.forward_from_chat.username
-#         await bot.send_message(message.from_user.id,
-#                                "Ready to post to channel: " + f'@{channelname}' + " Don't forget that i must be the admin of this channel!")
-
-
 @dp.message_handler(content_types=['document', 'text'])
 async def convert_webm(message: types.file):
     global ffm
     global channelid
     global channelname
+    set_channelid(message)
 
     if message.forward_from_chat:
         if not message.forward_from_chat.id:
@@ -181,6 +152,7 @@ async def convert_webm(message: types.file):
         os.remove(path)
         path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
         os.remove(path)
+        await bot.send_message(message.from_user.id, f"Converting finished, video sent to channel @{channelname}")
 
     elif re.search(r'mp4$', message.text.lower()):
         webmid = str(random.randrange(10000000))
