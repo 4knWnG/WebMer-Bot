@@ -20,8 +20,6 @@ class FFMConvertor:
         try:
             command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
             subprocess.run(command)
-        except:
-            print('Some Exeption')
 
 
 ffm = FFMConvertor()
