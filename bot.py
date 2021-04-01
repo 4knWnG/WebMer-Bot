@@ -39,21 +39,20 @@ async def start_message(message: types.Message):
     global channelid
     global channelname
 
+    await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
+                "\nTo start send me any message from channel you want to post webm and make me an admin of this channel!")
+
     with open('channels.json') as f:
         data = json.load(f)
         for u in data['users']:
 
-            if message.from_user.id != u['id']:
-
-                await bot.send_message(message.from_user.id, "Hi i am WEBMer Bot!"
-                "\nTo start send me any message from channel you want to post webm and make me an admin of this channel!")
-
-            else:
+            if message.from_user.id == u['id']:
 
                 channelid = u['channelid']
                 channelname = u['channelname']
 
                 await bot.send_message(message.from_user.id, 'The last time you posted on this channel ' + f'@{channelname}')
+
 
 
 
