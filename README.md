@@ -2,7 +2,7 @@
 
 # WEBMer Bot
 
-![WEBMer](https://img.shields.io/static/v1?label=Python&message=3.9.2&color=blue?style=flat-square)
+![Python](https://img.shields.io/static/v1?label=Python&message=3.9.2&style=flat-square&color=blue) ![PIP](https://img.shields.io/static/v1?label=PIP&message=21.0.1&style=flat-square&color=blue) ![aiogram](https://img.shields.io/static/v1?label=aiogram&message=2.12.1&style=flat-square&color=orange) ![asyncio](https://img.shields.io/static/v1?label=asyncio&message=3.4.3&style=flat-square&color=red)
 
 **With bot you can convert webm to mp4 and immediately post them to your Telegram channel as a video message! [Try it!](https://t.me/WebmerBot)**
 
