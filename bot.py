@@ -114,6 +114,7 @@ async def setup2_message(message: types.message):
                     newuser = ({'id': message.from_user.id,'channelid': message.forward_from_chat.id, 'channelname': message.forward_from_chat.username})
                     data['users'].append(newuser)
                 json.dump(data, f)
+                f.close()
 
         channelid = message.forward_from_chat.id
         channelname = message.forward_from_chat.username
