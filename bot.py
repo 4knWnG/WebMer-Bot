@@ -17,10 +17,10 @@ dp = Dispatcher(bot)
 class FFMConvertor:
 
     def convert_webm_mp4(self, input_file, output_file):
-        try:
+        
             command = 'ffmpeg -i ' + input_file + ' ' + output_file + ' -y'
             subprocess.run(command)
-
+        
 
 ffm = FFMConvertor()
 
