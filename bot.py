@@ -3,6 +3,7 @@ from asyncio import sleep
 from dotenv import load_dotenv
 from io import BytesIO
 
+import ffmpeg
 import subprocess
 import os
 import re
