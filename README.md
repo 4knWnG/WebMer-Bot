@@ -1,4 +1,4 @@
-![WEBMer](logo.png)
+![WEBMer](bunner.png)
 
 # WEBMer Bot
 
