@@ -103,13 +103,12 @@ async def setup2_message(message: types.message):
 
             with open('channels.json') as f:
                 data = json.load(f)
+                isnew = True
                 for u in data['users']:
-                    isnew = True
                     if message.from_user.id == u['id']:
                         u['channelid'] = message.forward_from_chat.id
                         u['channelname'] = message.forward_from_chat.username
                         isnew = False
-
             with open('channels.json', 'w') as f:
                 if isnew:
                     newuser = ({'id': message.from_user.id,'channelid': message.forward_from_chat.id, 'channelname': message.forward_from_chat.username})
@@ -161,7 +160,7 @@ async def convert_webm(message: types.file):
             await bot.send_message(message.from_user.id, "Conversion error!")
     
     elif re.search(r'webm$', message.text.lower()):
-        webmid = 'dsfghsdgdfsg'
+        webmid = 'dsfghsdgdfsg'     # ЭТО КЕК !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         await bot.send_message(message.from_user.id, "Converting to mp4 ...")
         request = requests.get(message.text)
         input_file_name = str(webmid + 'input.webm')
