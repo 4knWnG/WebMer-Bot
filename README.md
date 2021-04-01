@@ -2,11 +2,13 @@
 
 # WEBMer Bot
 
+<a href="https://www.ffmpeg.org/download.html"><img src="https://img.shields.io/static/v1?label=ffmpeg&message=download&style=flat-square&color=brightgreen"></a>
 <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/static/v1?label=python&message=3.9.2&style=flat-square&color=blue"></a>
 <a href="https://pypi.org/project/pip/"><img src="https://img.shields.io/static/v1?label=pip&message=21.0.1&style=flat-square&color=blue"></a>
 <a href="https://pypi.org/project/aiogram/"><img src="https://img.shields.io/static/v1?label=aiogram&message=2.12.1&style=flat-square&color=orange"></a>
 <a href="https://pypi.org/project/asyncio/"><img src="https://img.shields.io/static/v1?label=asyncio&message=3.4.3&style=flat-square&color=red"></a>
 <a href="https://pypi.org/project/requests/"><img src="https://img.shields.io/static/v1?label=requests&message=2.25.1&style=flat-square&color=green"></a>
+
 
 **With bot you can convert webm to mp4 and immediately post them to your Telegram channel as a video message! [Try it!](https://t.me/WebmerBot)**
 
