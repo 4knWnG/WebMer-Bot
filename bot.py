@@ -38,11 +38,11 @@ async def start_message(message: types.Message):
 def get_channel_params(message):
     with open('channels.json') as f:
         data = json.load(f)
+        params = None
         for u in data['users']:
             if message.from_user.id == u['id']:
-                channelid = u['channelid']
-                channelname = u['channelname']
-    return {'channelid': channelid, 'channelname': channelname}
+                params = {'channelid': u['channelid'], 'channelname': u['channelname']}
+    return params
 
 
 @dp.message_handler(commands=['help'])
@@ -63,14 +63,10 @@ async def setup_message(message: types.message):
 async def current_message(message: types.message):
 
     channel_params = get_channel_params(message)
-    channelid = channel_params['channelid']
-    channelname = channel_params['channelname']
-    if channelid != 0:
-
+    if get_channel_params(message):
+        channelname = channel_params['channelname']
         await bot.send_message(message.from_user.id, 'Currently connected server: ' + f'@{channelname}')
-
     else:
-
         await bot.send_message(message.from_user.id, "No channel connected! Forward me any message from it!")
 
 
@@ -79,10 +75,74 @@ async def convert_webm(message: types.file):
     global ffm
 
     channel_params = get_channel_params(message)
-    channelid = channel_params['channelid']
-    channelname = channel_params['channelname']
 
-    if message.forward_from_chat:
+    if channel_params:
+        channelid = channel_params['channelid']
+        channelname = channel_params['channelname']
+        if message.document:
+            if message.document.mime_subtype == 'webm':
+                try:
+                    webmid = message.document.file_id
+                    await bot.send_message(message.from_user.id, "Converting to mp4 ...")
+                    webmvid = await bot.download_file_by_id(webmid)
+
+                    input_file_name = str(webmid + 'input.webm')
+                    output_file_name = str(webmid + 'output.mp4')
+
+                    b = BytesIO()
+                    b.write(webmvid.getvalue())
+                    with open(input_file_name, 'wb') as f:
+                        f.write(b.getvalue())
+                    ffm.convert_webm_mp4(input_file_name, output_file_name)
+                    file = types.InputFile(output_file_name)
+                    await bot.send_document(int(channelid), file)
+                    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
+                    os.remove(path)
+                    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
+                    os.remove(path)
+                    await bot.send_message(message.from_user.id,
+                                           f"Converting finished, video sent to channel @{channelname}")
+                except:
+                    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
+                    os.remove(path)
+                    await bot.send_message(message.from_user.id, "Conversion error!")
+
+        elif re.search(r'webm$', message.text.lower()):
+            webmid = str(random.randrange(10000000))
+            await bot.send_message(message.from_user.id, "Converting to mp4 ...")
+            request = requests.get(message.text)
+            input_file_name = str(webmid + 'input.webm')
+            output_file_name = str(webmid + 'output.mp4')
+            with open(input_file_name, 'wb') as file:
+                file.write(request.content)
+            ffm.convert_webm_mp4(input_file_name, output_file_name)
+            file = types.InputFile(output_file_name)
+            await bot.send_video(int(channelid), file, supports_streaming=True)
+
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
+            os.remove(path)
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
+            os.remove(path)
+            await bot.send_message(message.from_user.id, f"Converting finished, video sent to channel @{channelname}")
+
+        elif re.search(r'mp4$', message.text.lower()):
+            webmid = str(random.randrange(10000000))
+            request = requests.get(message.text)
+            file_name = str(webmid + 'vid.mp4')
+            await bot.send_message(message.from_user.id, "Downloading mp4")
+            with open(file_name, 'wb') as file:
+                file.write(request.content)
+                file.close()
+            await bot.send_message(message.from_user.id, f"Sending mp4 to channel @{channelname}")
+            file = types.InputFile(file_name)
+            await bot.send_video(int(channelid), file)
+
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), file_name)
+            os.remove(path)
+
+        else:
+            await bot.send_message(message.from_user.id, "WebM file or a link to it is required!")
+    elif message.forward_from_chat:
         if not message.forward_from_chat.id:
             await bot.send_message(message.from_user.id, "I need a message forwarded from your channel!")
         else:
@@ -101,76 +161,11 @@ async def convert_webm(message: types.file):
                     data['users'].append(newuser)
                 json.dump(data, f)
                 f.close()
-        channelid = message.forward_from_chat.id
         channelname = message.forward_from_chat.username
         await bot.send_message(message.from_user.id,
                                "Ready to post to channel: " + f'@{channelname}' + " Don't forget that i must be the admin of this channel!")
 
-    if channelid == 0:
-        await bot.send_message(message.from_user.id, "First you need to setup your server!")
-    elif message.document:
-        if message.document.mime_subtype == 'webm':
-            try:
-                webmid = message.document.file_id
-                await bot.send_message(message.from_user.id, "Converting to mp4 ...")
-                webmvid = await bot.download_file_by_id(webmid)
 
-                input_file_name = str(webmid + 'input.webm')
-                output_file_name = str(webmid + 'output.mp4')
-
-                b = BytesIO()
-                b.write(webmvid.getvalue())
-                with open(input_file_name, 'wb') as f:
-                    f.write(b.getvalue())
-                ffm.convert_webm_mp4(input_file_name, output_file_name)
-                file = types.InputFile(output_file_name)
-                await bot.send_document(int(channelid), file)
-                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
-                os.remove(path)
-                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
-                os.remove(path)
-                await bot.send_message(message.from_user.id,
-                                       f"Converting finished, video sent to channel @{channelname}")
-            except:
-                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
-                os.remove(path)
-                await bot.send_message(message.from_user.id, "Conversion error!")
-
-    elif re.search(r'webm$', message.text.lower()):
-        webmid = str(random.randrange(10000000))
-        await bot.send_message(message.from_user.id, "Converting to mp4 ...")
-        request = requests.get(message.text)
-        input_file_name = str(webmid + 'input.webm')
-        output_file_name = str(webmid + 'output.mp4')
-        with open(input_file_name, 'wb') as file:
-            file.write(request.content)
-        ffm.convert_webm_mp4(input_file_name, output_file_name)
-        file = types.InputFile(output_file_name)
-        await bot.send_video(int(channelid), file, supports_streaming=True)
-
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
-        os.remove(path)
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
-        os.remove(path)
-        await bot.send_message(message.from_user.id, f"Converting finished, video sent to channel @{channelname}")
-
-    elif re.search(r'mp4$', message.text.lower()):
-        webmid = str(random.randrange(10000000))
-        request = requests.get(message.text)
-        file_name = str(webmid + 'vid.mp4')
-        await bot.send_message(message.from_user.id, "Downloading mp4")
-        with open(file_name, 'wb') as file:
-            file.write(request.content)
-            file.close()
-        await bot.send_message(message.from_user.id, f"Sending mp4 to channel @{channelname}")
-        file = types.InputFile(file_name)
-        await bot.send_video(int(channelid), file)
-
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), file_name)
-        os.remove(path)
-
-    else:
-        await bot.send_message(message.from_user.id, "WebM file or a link to it is required!")
 
 
 if __name__ == '__main__':
