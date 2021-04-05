@@ -101,7 +101,7 @@ async def convert_webm(message: types.file):
                     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
                     os.remove(path)
                     await bot.send_message(message.from_user.id,
-                                           f"Converting finished, video sent to channel @{channelname}")
+                                           f"Converting finished, video sent to channel: @{channelname}")
                 except:
                     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), input_file_name)
                     os.remove(path)
@@ -123,7 +123,7 @@ async def convert_webm(message: types.file):
             os.remove(path)
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), output_file_name)
             os.remove(path)
-            await bot.send_message(message.from_user.id, f"Converting finished, video sent to channel @{channelname}")
+            await bot.send_message(message.from_user.id, f"Converting finished, video sent to channel: @{channelname}")
 
         elif re.search(r'mp4$', message.text.lower()):
             webmid = str(random.randrange(10000000))
